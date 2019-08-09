@@ -11,8 +11,34 @@ set :database, "sqlite3:barbershop.db"
 	class Barber < ActiveRecord::Base
 	end
 
+before do 
+	@barbers = Barber.all
+end
 
 get '/' do
-	@barbers = Barber.order "created_at DESC"
 	erb :index		
+end
+get '/visit' do
+	erb :visit
+end
+
+post '/visit' do
+
+	@username = params[:username]
+	@phone = params[:phone]
+	@datetime = params[:datetime]
+	@barber = params[:barber]
+	@color = params[:color]
+
+	c = Client.new
+	c.name = @username
+	c.phone = @phone
+	c.datestamp = @datetime
+	c.barber = @barber
+	c.color = @colorc
+	c.save
+
+
+#	erb "OK, username is #{@username}, #{@phone}, #{@datetime}, #{@barber}, #{@color}"
+erb "<h2> Спасибо, вы успешно записались</h2>"
 end
