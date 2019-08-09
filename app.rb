@@ -13,5 +13,6 @@ set :database, "sqlite3:barbershop.db"
 
 
 get '/' do
+	@barbers = Barber.all
 	erb :index		
 end
