@@ -10,10 +10,10 @@ set :database, "sqlite3:barbershop.db"
 	validates :phone, presence: true
 	validates :datestamp, presence: true
 	validates :color, presence: true
-	end
+end
 
-	class Barber < ActiveRecord::Base
-	end
+class Barber < ActiveRecord::Base
+end
 
 before do 
 	@barbers = Barber.all
@@ -22,16 +22,17 @@ end
 get '/' do
 	erb :index		
 end
+
 get '/visit' do
 	erb :visit
 end
 
 post '/visit' do
-c = Client.new params[:client]
-c.save
 
-
-
-#	erb "OK, username is #{@username}, #{@phone}, #{@datetime}, #{@barber}, #{@color}"
-erb "<h2> Спасибо, вы успешно записались</h2>"
+	c = Client.new params[:client]
+	if c.save
+		erb "<h2> Спасибо, вы успешно записались</h2>"
+	else 
+	erb "<h2> Error </h2>"
+end
 end
